@@ -40,6 +40,15 @@ class Deck {
         return popped.getData();
       }
     };
+
+    traverse = () => {
+      let current = this.top;
+      while (current) {
+        console.log(this.top.getData());
+        current = current.next;
+      }
+
+      };
 }
 
 const colours = ["red", "blue", "green", "yellow"];
@@ -74,3 +83,4 @@ while (player2.length < player2.limit){
 }
 
 console.log("First card in the deck: ", gameCards.peek());
+// console.log(player1.traverse());
