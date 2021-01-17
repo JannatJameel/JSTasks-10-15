@@ -76,4 +76,4 @@ console.log(altonTowers.peek());
 console.log(altonTowers.front.groupSize);
 console.log(altonTowers.back.groupSize);
 // Why is it not counting the last node?
-// console.log(altonTowers.length); 
+console.log(altonTowers.length); 
