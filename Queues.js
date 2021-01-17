@@ -18,43 +18,30 @@ class Queue {
 
     isEmpty = () => this.length === 0;
 
-    peek = () => (this.isEmpty() ? `No one is queuing for the ride` : this.waitTime);
+    peek = () => this.waitTime;
+
+    addNode = (groupSize) => {
+        const newNode = new Node(groupSize);
+        if (this.isEmpty()) this.front = newNode;
+        else this.back.next = newNode;
+
+        this.back = newNode;
+        this.length++;
+        this.waitTime += groupSize * 0.5;
+    }
 
     enqueue = (groupSize) => {
         if (this.isFull()) {
-            console.log("Queue is full, come back in few minutes");
-        } else if(groupSize <= 12) {
-            const newNode = new Node(groupSize);
-            if (this.isEmpty()) {
-                this.front = newNode;
-                this.back = newNode;
-            } else {
-                this.back.next = newNode;
-                this.back = newNode;
+            console.log(`The queue is full, come back in ${waitTime} minutes`)
+        } else{
+            let ridersCount = groupSize;
+            while (ridersCount > 12) {
+                this.addNode(12);
+                ridersCount -= 12;
             }
-            this.length++;
-        } else {
-            const groupCount = Math.ceil(groupSize/12);
-            console.log(`You'll be seperated into ${groupCount} groups`);
-            let count = 0;
-            while (count < groupCount) {
-                const newNode = new Node(12);
-                if (this.isEmpty()) {
-                    this.front = newNode;
-                    this.back = newNode;
-                } else {
-                    this.back.next = newNode;
-                    this.back = newNode;
-                }
-                count++;
-            }
-            const lastGroup = (groupSize % 12) * 12;
-            const newNode1 = new Node(lastGroup);
-            this.back.next = newNode1;
-            this.back = newNode1;
-            this.length += groupCount;
+            this.addNode(ridersCount);
         }
-        this.waitTime += groupSize * 30;
+
     };
 
     dequeue = () => {
@@ -68,21 +55,25 @@ class Queue {
             } else {
                 this.front = removed.next;
             }
-            this.waitTime -= (removed.groupSize * 30);
+            this.waitTime -= (removed.groupSize * 0.5);
             this.length--;
             return removed.groupSize;
         }
     };
 }
 
-const rideQueue = new Queue(30);
-rideQueue.enqueue(4);
-rideQueue.enqueue(6);
-rideQueue.enqueue(2);
-rideQueue.enqueue(26);
+const altonTowers = new Queue(30);
+altonTowers.enqueue(4);
+altonTowers.enqueue(6);
+altonTowers.enqueue(2);
+altonTowers.enqueue(26);
 
-console.log(rideQueue.peek());
-console.log(rideQueue.waitTime/60);
+console.log(altonTowers.peek());
 
-rideQueue.dequeue();
-console.log(rideQueue.waitTime/60);
+altonTowers.dequeue();
+console.log(altonTowers.peek());
+
+console.log(altonTowers.front.groupSize);
+console.log(altonTowers.back.groupSize);
+// Why is it not counting the last node?
+// console.log(altonTowers.length); 
