@@ -7,6 +7,10 @@ class TreeNode {
         this.left = null;
     }
 
+    getParent = (name) => {
+        return this.find((element) => element === name);
+    }
+
     addChild = (node) => {
         if(this.right = null){
             this.right = node;
@@ -23,20 +27,14 @@ class TreeNode {
         let nodes = [this];
         while (nodes.length > 0) {
             let current = nodes.pop();
-            if(name === current.name){
-                return current;
-            } else {
-                nodes = [...nodes, current.right, current.left];
-            }
-            // console.log(current.right + current.left)
-        }
-        // might need to console log that name is not in family
+            console.log(current.right + current.left)
+            nodes = [...nodes, current.right, current.left];
     };
 }
 
 const familyRoot = new TreeNode("Ahmed");
 
-let fullName = prompt("Enter Child full name (type 'done' to print family Tree): ");
+let fullName = prompt("Enter child full name (type 'done' to exit): ");
 
 while (fullName !== "done"){
     let current = familyRoot;
@@ -48,7 +46,7 @@ while (fullName !== "done"){
     if(lastName === current.name){
         if(names){
             for (let name of names){
-                let parent = current.traverse(name);
+                let parent = current.parrent(name);
                 if (parent){
                     current = parent;
                 } else {
@@ -62,8 +60,5 @@ while (fullName !== "done"){
         current.addChild(newChild);
     }
     console.log("------------------------------------------");
-    fullName = prompt("Enter Child full name (type 'done' to print family Tree): ");
+    fullName = prompt("Enter Child full name (type 'done' to exit): ");
 }
-
-// familyRoot.traverse();
-
