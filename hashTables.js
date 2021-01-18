@@ -36,24 +36,26 @@ class Classes{
 
     hash = (score) => {
         if (score >= 90){
-            return this.classes.A;
+            return ["A", this.classes.A];
         } else if (score < 90 && score >= 80) {
-            return this.classes.B;
+            return ["B", this.classes.B];
         } else if (score < 80 && score >= 70) {
-            return this.classes.C;
+            return ["C", this.classes.C];
         } else if (score < 70 && score >= 60) {
-            return this.classes.D;
+            return ["D", this.classes.D];
         } else {
-            return this.classes.Other;
+            return ["Other", this.classes.Other];
         }
     }
 
     insert = (name, score) => {
-        const index = this.hash(score);
+        const assigned = this.hash(score);
+        let group = assigned[0];
+        let index = assigned[1];
         if (index.length < this.classSize){
             index.push(name, score);
         } else {
-            console.log(`Each class can only have ${this.classSize} students`)
+            console.log(`Class ${group} can only have ${this.classSize} students`)
         } 
     }
 }
@@ -66,4 +68,4 @@ while (count < students.length){
     count++;
 }
 
-console.log(arrangedClasses.classes);
+console.table(arrangedClasses.classes);

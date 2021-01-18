@@ -7,50 +7,63 @@ class TreeNode {
         this.left = null;
     }
 
-    parent = (name) => {
-        let parent = name.split(" ");
-        return parent[0];
-    }
-
-    parent1 = (name) => {
-        let parent = name.split(" ");
-        return parent[1];
-    }
-
     addChild = (node) => {
-        const parent = this.traverse(node); 
-        if(parent.right = null){
+        if(this.right = null){
             this.right = node;
-        } else if (parent.left = null){
+            console.log(`${node.name} is a child of ${this.name}`)
+        } else if (this.left = null){
             this.left = node;
+            console.log(`${node.name} is a child of ${this.name}`)
         } else {
-            console.log(`${node.name} cannot be added to ${parent.name} family`);
+            console.log(`${node.name} cannot be added to family`);
         }
     };
 
-    traverse = (node) => {
+    traverse = (name) => {
         let nodes = [this];
-        let parent1 = parent1(node.name)
         while (nodes.length > 0) {
             let current = nodes.pop();
-            let parent = parent(current.name);
-
-            if(parent === parent1){
+            if(name === current.name){
                 return current;
             } else {
                 nodes = [...nodes, current.right, current.left];
             }
-        }  
+            // console.log(current.right + current.left)
+        }
+        // might need to console log that name is not in family
     };
 }
 
-const family = new TreeNode("family");
+const familyRoot = new TreeNode("Ahmed");
 
-const newChild = promt("Enter Child full name");
-while (newChild !== done){
-    const child = new TreeNode();
+let fullName = prompt("Enter Child full name (type 'done' to print family Tree): ");
+
+while (fullName !== "done"){
+    let current = familyRoot;
+
+    let names = fullName.split(" ").reverse();
+    let firstName = names.pop();
+    let lastName = names.shift();
+
+    if(lastName === current.name){
+        if(names){
+            for (let name of names){
+                let parent = current.traverse(name);
+                if (parent){
+                    current = parent;
+                } else {
+                    let newChild = new TreeNode(name);
+                    current.addChild(newChild);
+                    current = newChild;
+                }
+            }
+        }
+        let newChild = new TreeNode(firstName);
+        current.addChild(newChild);
+    }
+    console.log("------------------------------------------");
+    fullName = prompt("Enter Child full name (type 'done' to print family Tree): ");
 }
 
-family.traverse(child1);
-family.traverse(child2);
+// familyRoot.traverse();
 
