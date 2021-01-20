@@ -1,4 +1,3 @@
-
 const numbers = [
     [1, 2, 3, 4],
     [3, 6, [5, 6], 8, 2,[2, 4], 9],
@@ -6,13 +5,14 @@ const numbers = [
 ]
 
 const sum = (array) => {
-    // array.forEach((element) => {
-        if(Array.isArray(array[0])){
-            return sum(array[0]) + sum(array.slice(1));
+    let total = 0;
+    array.forEach((element) => {
+        if(Array.isArray(element)){
+            total += sum(element);
         } else {
-            return array[0] + sum(array.slice(1));
-        }
-    // })
+            total+= element;
+    }});
+    return total;
 }
 
 console.log(sum(numbers));
